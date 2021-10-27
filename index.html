@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="project-style.css">
+    <!-- <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <title>Fuel Cost Calculator</title>
+</head>
+<body>
+    <div class='pre-container-background'>
+        <div class='container container-background shadow'>
+            <section class="pl-5 pr-5 space">
+                <div class="text-center bottom-line space-bottom">
+                   <!-- <img src="Logo copy.png" class="img-fluid" alt="">  -->
+                   <a  href="index.html"> <img src="Logo copy.png" class="img-fluid" alt=""></a>
+                </div>
+                <h6 class="text-muted text-center pt-4">Please fill the fields below to get an estimate of fuel cost according to a vehicle's fuel efficiency, mileage driven and fuel price</h6>
+                <br>
+                <form>
+                    <h4 class="text-muted">Vehicle Details</h4>
+                    <div class="card shadow-sm text-dark">
+                        <div class="card-body bg-light-blue">
+                            <div class= "row "> 
+                                    <div class="form-group col-md-4">
+                                        <label>Brand</label>
+                                        <input type="select" list="selectBrand" id ='carBrand' placeholder="- Select" class="form-control" >
+                                        <datalist id="selectBrand"></datalist>
+                                        <!-- <select class="custom-select shadow-sm" id="carBrand"> -->
+                                            <!-- <option selected> - Select</option> -->
+                                            <!-- <option> Audi</option>
+                                            <option> BMW</option>
+                                            <option> Chevrolet</option>
+                                            <option> Chevrolet</option>
+                                            <option> Ford</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="title">Year</label>
+                                        <input type="text" list="selectYear" id ='carYear' placeholder="- Select"  class="form-control" >
+                                        <datalist id="selectYear"></datalist>
+                                        <!-- <select class="custom-select shadow-sm" id="carYear"> -->
+                                            <!-- <option selected> - Select</option>
+                                            <option> 2021</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="title">Model</label>
+                                        <input type="text" list="selectModel" id ='carModel' placeholder="- Select"  class="form-control" >
+                                        <datalist id="selectModel"></datalist>
+                                        <!-- <select class="custom-select shadow-sm" id="carModel"> -->
+                                            <!-- <option selected> - Select</option>
+                                            <option> x3</option> -->
+                                        </select>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <br>
+                    <h4 class="text-muted">Mileage Details</h4>
+                    <div class="card shadow-sm">
+                        <div class="card-body bg-light-blue text-dark">
+                                <div class="form-check col-md-4">
+                                    <input class="form-check-input" type="radio" name="mileage" id="mileage1" value="option1" checked="checked">
+                                    <label class="form-check-label" for="mileage1">Mileage<a class="text-muted small-font"> * Enter miles you are expected to drive</a></label>
+                                    <input type="text" class="form-control shadow-sm" id="mileage">  
+
+                                </div>
+                                <br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="mileage" id="DistanceMileage" value="option2">
+                                    <label class="form-check-label " for="mileage1">Distance Mileage<a class="text-muted small-font"> * Calculates miles bewteen two locations</a></label>
+                                    <div class="row"> 
+                                        <div class="form-group col-md-4 pt-2">
+                                            <label class= 'card-text text-secondary'>Starting Point:</label>
+                                            <input type="number" class="form-control shadow-sm" id="mileageStart" placeholder="- ZIP Code" >
+                                        </div>
+                                        <div class="form-group col-md-4 pt-2">
+                                            <label class= 'card-text text-secondary'>Destination:</label>
+                                            <input type="number" class="form-control shadow-sm" id="mileageEnd" placeholder="- ZIP Code" >
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <br>
+                    <h4 class="text-muted">Fuel Details</h4>
+                    <div class="card shadow-sm text-dark">
+                        <div class="card-body bg-light-blue text-dark">
+                                <div class="form-check"> 
+                                    <div class="row">
+                                    <div class="col-md-5">
+                                        <input class="form-check-input" type="radio" name="gasprice" id="gasType" value="" checked="checked">
+                                        <label class="form-check-label" for="mileage1">Gasoline Type<a class="text-muted small-font"> * Fuel prices are based on the national average</a></label>
+                                        <select class="custom-select shadow-sm" id="gasolineType">
+                                            <option selected> - Select</option>
+                                            <option value="3.27">Regular: $3.27</option>
+                                            <option value="3.59">Midgrade: $3.59</option>
+                                            <option value="3.89">Premium: $3.89</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input class="form-check-input" type="radio" name="gasprice" id="gasCustom" value="">
+                                        <label class="form-check-label" for="mileage1">Custom Gasoline Price Per Gallon</label>
+                                        <input type="number" class="form-control shadow-sm col" step="0.1" placeholder="0.00" id="gasolineCustom" >
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row pt-2 ">
+                        <div class="col-md-4"></div>
+                        <div class=""> 
+                            <button type="button" class="btn btn-success btn-lg pr-5 pl-5 shadow " id="calculate">Calculate</button>
+                        </div>
+                        <div class="pl-5">
+                            <a href="index.html" class="btn btn-danger btn-lg shadow" role="button" data-bs-toggle="button">Reset</a>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <div class="space">
+                    <div class="card shadow" style="width: 100 rem; height: 25rem;">
+                        <div class="card-body bg-light-blue">
+                            <img class="card-title" src="Results copy.png">
+                            <div class="text-center" id="results"></div>
+                            <h1 class="text-success text-center fw-bold" id='results1'></h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    </div>
+    <script src="fuel_app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
