@@ -111872,11 +111872,32 @@ const deleteTable = (toDelete) => {
   
 }
 
+var mileage;
+function setMileage(miles){
+  mileage = miles
+  console.log('Miles:',mileage)
+}
+
+function getMileage(startMileage, endMileage){
+  var req = new XMLHttpRequest();
+  req.open('GET', 'https://distance-for-fuel-calc.herokuapp.com/?from=' + startMileage + '&to=' + endMileage + '&unit=mile', true);
+  req.send(null);
+  req.addEventListener('load',function(){
+      if(req.status >= 200 && req.status < 400){
+          let response = JSON.parse(req.responseText);
+          let results = response['distance']
+          console.log(results)
+          setMileage(results)
+      } else {
+          console.log("Error in network request: " + req.statusText);
+        }
+  });
+}
+
 // ***** Calculates and displays fuel cost resuls ****
 document.getElementById('calculate').addEventListener('click', function(event){
   let fuel_efficiency;
-  let mileage;
-  // let distanceMileage = 50;
+  // let mileage;
   let fuelPrice;
   let vehicleBrand = document.getElementById('carBrand').value
   let vehicleModel = document.getElementById('carModel').value
@@ -111895,7 +111916,10 @@ document.getElementById('calculate').addEventListener('click', function(event){
   }if (document.getElementById('mileageStart').disabled == false){
     console.log(document.getElementById('mileageStart').value)
     console.log(document.getElementById('mileageEnd').value)
-    mileage = 350
+    let startMileage = document.getElementById('mileageStart').value
+    let endMileage = document.getElementById('mileageEnd').value
+    getMileage(startMileage, endMileage)
+
 
   }if (document.getElementById('gasolineType').disabled == false){
     console.log(document.getElementById('gasolineType').value)
@@ -111906,6 +111930,9 @@ document.getElementById('calculate').addEventListener('click', function(event){
     fuelPrice = document.getElementById('gasolineCustom').value
   }
 
+
+  
+  
   // calculates fuel cost and rounds it to the nearest hundredth(two decimal places)
   calculation = (( mileage / fuel_efficiency) * fuelPrice).toFixed(2)
   
