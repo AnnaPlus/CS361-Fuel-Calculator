@@ -111868,36 +111868,59 @@ const deleteTable = (toDelete) => {
   let parent =  document.getElementById(toDelete)
   while(parent.firstChild){
     parent.removeChild(parent.firstChild);
-}
-  
-}
-
-var mileage;
-function setMileage(miles){
-  mileage = miles
-  console.log('Miles:',mileage)
+  }
 }
 
-function getMileage(startMileage, endMileage){
+
+function calculateCost(startMileage, endMileage, fuel_efficiency, fuelPrice, vehicleBrand, vehicleModel, vehicleYear){
   var req = new XMLHttpRequest();
   req.open('GET', 'https://distance-for-fuel-calc.herokuapp.com/?from=' + startMileage + '&to=' + endMileage + '&unit=mile', true);
   req.send(null);
   req.addEventListener('load',function(){
       if(req.status >= 200 && req.status < 400){
           let response = JSON.parse(req.responseText);
-          let results = response['distance']
-          console.log(results)
-          setMileage(results)
+          let mileage = response['distance']
+
+          // calculates fuel cost and rounds it to the nearest hundredth(two decimal places)
+          calculation = (( mileage / fuel_efficiency) * fuelPrice).toFixed(2)
+          
+          let parent =  document.getElementById("results")
+          if (parent.childElementCount != 0){
+            deleteTable("results");
+            deleteTable("results1");
+          }
+          let p3 = document.createElement("p");
+          let p2 = document.createElement("p");
+          let p1 = document.createElement("p");
+          let header = document.createElement("h1");
+          parent.appendChild(header);
+          parent.appendChild(p1);
+          parent.appendChild(p2);
+          parent.appendChild(p3);
+          header.textContent = vehicleBrand + "  " + vehicleModel + " - " + vehicleYear;
+          header.classList.add("text-muted");
+          p1.textContent = "Fuel efficiency: " + fuel_efficiency + " MPG combined city/hwy";
+          p1.classList.add("text-muted")
+          p2.textContent = "Desired mileage of " + mileage + " miles";
+          p3.textContent = "Price of $" + fuelPrice + " per gallon";
+
+          let header2 = document.createElement("p");
+          document.getElementById("results1").appendChild(header2);
+          header2.textContent = "Total Cost = $" + calculation;
+                
+
       } else {
           console.log("Error in network request: " + req.statusText);
         }
   });
 }
 
+
+
 // ***** Calculates and displays fuel cost resuls ****
 document.getElementById('calculate').addEventListener('click', function(event){
   let fuel_efficiency;
-  // let mileage;
+  let mileage;
   let fuelPrice;
   let vehicleBrand = document.getElementById('carBrand').value
   let vehicleModel = document.getElementById('carModel').value
@@ -111909,57 +111932,53 @@ document.getElementById('calculate').addEventListener('click', function(event){
   }
   console.log(vehicleBrand, vehicleModel, vehicleYear, fuel_efficiency);
 
-  if (document.getElementById('mileage').disabled == false){
-    console.log(document.getElementById('mileage').value)
-    mileage = document.getElementById('mileage').value
-
-  }if (document.getElementById('mileageStart').disabled == false){
-    console.log(document.getElementById('mileageStart').value)
-    console.log(document.getElementById('mileageEnd').value)
-    let startMileage = document.getElementById('mileageStart').value
-    let endMileage = document.getElementById('mileageEnd').value
-    getMileage(startMileage, endMileage)
-
-
-  }if (document.getElementById('gasolineType').disabled == false){
+  if (document.getElementById('gasolineType').disabled == false){
     console.log(document.getElementById('gasolineType').value)
     fuelPrice = document.getElementById('gasolineType').value
 
   }if (document.getElementById('gasolineCustom').disabled == false){
     console.log(document.getElementById('gasolineCustom').value)
     fuelPrice = document.getElementById('gasolineCustom').value
+
+  }if (document.getElementById('mileage').disabled == false){
+    console.log(document.getElementById('mileage').value)
+    mileage = document.getElementById('mileage').value
+      // calculates fuel cost and rounds it to the nearest hundredth(two decimal places)
+    calculation = (( mileage / fuel_efficiency) * fuelPrice).toFixed(2)
+    
+    let parent =  document.getElementById("results")
+    if (parent.childElementCount != 0){
+      deleteTable("results");
+      deleteTable("results1");
+    }
+    let p3 = document.createElement("p");
+    let p2 = document.createElement("p");
+    let p1 = document.createElement("p");
+    let header = document.createElement("h1");
+    parent.appendChild(header);
+    parent.appendChild(p1);
+    parent.appendChild(p2);
+    parent.appendChild(p3);
+    header.textContent = vehicleBrand + "  " + vehicleModel + " - " + vehicleYear;
+    header.classList.add("text-muted");
+    p1.textContent = "Fuel efficiency: " + fuel_efficiency + " MPG combined city/hwy";
+    p1.classList.add("text-muted")
+    p2.textContent = "Desired mileage of " + mileage + " miles";
+    p3.textContent = "Price of $" + fuelPrice + " per gallon";
+
+    let header2 = document.createElement("p");
+    document.getElementById("results1").appendChild(header2);
+    header2.textContent = "Total Cost = $" + calculation;
+
+  }if (document.getElementById('mileageStart').disabled == false){
+    console.log(document.getElementById('mileageStart').value)
+    console.log(document.getElementById('mileageEnd').value)
+    let startMileage = document.getElementById('mileageStart').value
+    let endMileage = document.getElementById('mileageEnd').value
+    mileage = calculateCost(startMileage, endMileage, fuel_efficiency, fuelPrice, vehicleBrand, vehicleModel, vehicleYear)
+
   }
-
-
   
-  
-  // calculates fuel cost and rounds it to the nearest hundredth(two decimal places)
-  calculation = (( mileage / fuel_efficiency) * fuelPrice).toFixed(2)
-  
-  let parent =  document.getElementById("results")
-  if (parent.childElementCount != 0){
-    deleteTable("results");
-    deleteTable("results1");
-  }
-  let p3 = document.createElement("p");
-  let p2 = document.createElement("p");
-  let p1 = document.createElement("p");
-  let header = document.createElement("h1");
-  parent.appendChild(header);
-  parent.appendChild(p1);
-  parent.appendChild(p2);
-  parent.appendChild(p3);
-  header.textContent = vehicleBrand + "  " + vehicleModel + " - " + vehicleYear;
-  header.classList.add("text-muted");
-  p1.textContent = "Fuel efficiency: " + fuel_efficiency + " MPG combined city/hwy";
-  p1.classList.add("text-muted")
-  p2.textContent = "Desired mileage of " + mileage + " miles";
-  p3.textContent = "Price of $" + fuelPrice + " per gallon";
-
-  let header2 = document.createElement("p");
-  document.getElementById("results1").appendChild(header2);
-  header2.textContent = "Total Cost = $" + calculation;
-
 
   event.preventDefault(); 
 });
