@@ -1,41 +1,36 @@
-import {vehicles} from "./carData.js"
+import {vehicles, brandData} from "./carData.js"
 
 
-var data = [['Acura'], ['Alfa Romeo'], ['Aston Martin'], ['Audi'], ['Bentley'], ['BMW'], ['Bugatti'], ['Buick'], ['Cadillac'], ['Chevrolet'], ['Chrysler'], ['Dodge'], ['Ferrari'], ['Fiat'], ['Fisker'], ['Ford'], ['Genesis'], ['GMC'], ['Honda'], ['Hummer'], ['Hyundai'], ['Infiniti'], ['Jaguar'], ['Jeep'], ['Karma'], ['Kia'], ['Koenigsegg'], ['Lamborghini'], ['Land Rover'], ['Lexus'], ['Lincoln'], ['Lotus'], ['Maserati'], ['Maybach'], ['Mazda'], ['McLaren Automotive'], ['Mercedes-Benz'], ['Mercury'], ['MINI'], ['Mitsubishi'], ['Mobility Ventures LLC'], ['Nissan'], ['Pagani'], ['Polestar'], ['Pontiac'], ['Porsche'], ['Ram'], ['Rolls-Royce'], ['Roush Performance'], ['RUF Automobile'], ['Saab'], ['Saturn'], ['Scion'], ['smart'], ['Spyker'], ['SRT'], ['STI'], ['Subaru'], ['Suzuki'], ['Toyota'], ['Volkswagen'], ['Volvo'], ['VPG']]; 
+// class contains user's information about car, mileage and fuel price details.
+class UserInfo {
+  constructor(vehicleBrand, vehicleModel, vehicleYear){
+    this.vehicleBrand = vehicleBrand
+    this.vehicleModel = vehicleModel
+    this.vehicleYear = vehicleYear
+    this.fuel_efficiency = null
+    this.mileage = null
+    this.startMileage = null
+    this.endMileage = null
+    this.fuelPrice = null
+    this.cost = null
+  }
+}
 
 
+// function populates car brand menu selection.
 document.getElementById('carBrand').addEventListener('click', function(event){
     var select = document.getElementById('selectBrand')
-    for(let i=0; i<data.length; i++ ) {
+    for(let i=0; i<brandData.length; i++ ) {
         var menuItem = document.createElement('option')
-        menuItem.textContent = data[i];
-        menuItem.value = data[i][0];
+        menuItem.textContent = brandData[i];
+        menuItem.value = brandData[i][0];
         select.appendChild(menuItem)
         }
     event.preventDefault();
-    // while(select.firstChild){
-    // select.removeChild(select.firstChild);
-    // }
 });
 
 
-
-// let brandDropdown = document.getElementById('carBrand');        
-// for(let i=0; i<data.length; i++ ) {    
-//   let menuItem = document.createElement('option');          
-//   menuItem.text = data[i];      
-//   menuItem.value = data[i][0];     
-//   brandDropdown.appendChild(menuItem);
-  
-//   console.log(document.getElementById('carBrand').value)         
-// }
-
-
-// console.log(document.getElementById('carBrand').value)
-// console.log(vehicles[0]['make'])
-// console.log(vehicles.length)
-
-
+// function populates car year menu according to car brand selected
 document.getElementById('carYear').addEventListener('click', function(event){
   var select = document.getElementById('selectYear')
   let yearList = [];
@@ -46,32 +41,13 @@ document.getElementById('carYear').addEventListener('click', function(event){
           yearList.push(vehicles[i]['year'])
           menuItem.text = vehicles[i]['year'];      
           menuItem.value = vehicles[i]['year'];    
-          select.appendChild(menuItem)
+          select.appendChild(menuItem);
         }
       }
    }
-  // event.preventDefault();
-  // while(select.firstChild){
-  //   select.removeChild(select.firstChild);
-// }
 });
 
-
-// Original dropdown menu
-// let yearDropdown = document.getElementById('carYear');
-// let yearList = [];
-// for(let i=0; i<vehicles.length; i++ ) {    
-//     let menuItem = document.createElement('option');
-//     if (document.getElementById('carBrand').value == vehicles[i]['make']){
-//         if (yearList.includes(vehicles[i]['year']) == false){
-//           yearList.push(vehicles[i]['year'])
-//           menuItem.text = vehicles[i]['year'];      
-//           menuItem.value = vehicles[i]['year'];     
-//           yearDropdown.add(menuItem); 
-//         }
-//     }                
-//   }
-
+// function populates car model menu selection according to car brand and year selected. 
 document.getElementById('carModel').addEventListener('click', function(event){
   var select = document.getElementById('selectModel')
   for(let i=0; i<vehicles.length; i++ ) {
@@ -79,14 +55,16 @@ document.getElementById('carModel').addEventListener('click', function(event){
       if (document.getElementById('carBrand').value == vehicles[i]['make'] && document.getElementById('carYear').value == vehicles[i]['year']){
           menuItem.text = vehicles[i]['model'];      
           menuItem.value = vehicles[i]['model'];    
-          select.appendChild(menuItem)
+          select.appendChild(menuItem);
       }
    }
   event.preventDefault(); 
 });
 
-// deletes every child appended to the parent element. 
-const deleteTable = (toDelete) => { 
+
+// function deletes results content. 
+// funtion deletes every child appended to the parent element. 
+function deleteResults(toDelete){ 
   let parent =  document.getElementById(toDelete)
   while(parent.firstChild){
     parent.removeChild(parent.firstChild);
@@ -94,43 +72,68 @@ const deleteTable = (toDelete) => {
 }
 
 
-function calculateCost(startMileage, endMileage, fuel_efficiency, fuelPrice, vehicleBrand, vehicleModel, vehicleYear){
+// function calculates fuel cost and rounds it to the nearest hundredth(two decimal places).
+function calculate_cost(User){
+  return (( User.mileage / User.fuel_efficiency) * User.fuelPrice).toFixed(2)
+}
+
+
+// function displays user's chosen vechicle details.
+function displayVehicleDetails(User, parent){
+  let header = document.createElement("h1");
+  let p1 = document.createElement("p");
+  parent.appendChild(header);
+  parent.appendChild(p1);
+  header.textContent = User.vehicleBrand + "  " + User.vehicleModel + " - " + User.vehicleYear;
+  header.classList.add("text-muted");
+  p1.textContent = "Fuel efficiency: " + User.fuel_efficiency + " MPG combined city/hwy";
+  p1.classList.add("text-muted");
+}
+
+
+// function displays user's chosen mileage details.
+function displayMileage(User, parent){
+  let p2 = document.createElement("p");
+  parent.appendChild(p2);
+  p2.textContent = "Desired mileage of " + User.mileage + " miles";
+}
+
+
+// function displays total fuel cost to the user. 
+function displayFuelCost(User){
+  let header2 = document.createElement("p");
+  document.getElementById("results1").appendChild(header2);
+  header2.textContent = "Total Cost = $" + User.cost;
+}
+
+
+// function prints the result of the calculation to the user.
+function printResults(User){
+  let parent =  document.getElementById("results");
+
+  if (parent.childElementCount != 0){  // deletes previous results.
+    deleteResults ("results");
+    deleteResults ("results1");
+  }
+  // displays results to the user.
+  displayVehicleDetails(User, parent);
+  displayMileage(User, parent);
+  displayFuelCost(User);
+
+  }
+
+
+// function requests distance in mileage between two locations, using teammate's (Vi Phung) service. 
+function getMileage(User){
   var req = new XMLHttpRequest();
-  req.open('GET', 'https://distance-for-fuel-calc.herokuapp.com/?from=' + startMileage + '&to=' + endMileage + '&unit=mile', true);
+  req.open('GET', 'https://distance-for-fuel-calc.herokuapp.com/?from=' + User.startMileage + '&to=' + User.endMileage + '&unit=mile', true);
   req.send(null);
   req.addEventListener('load',function(){
       if(req.status >= 200 && req.status < 400){
           let response = JSON.parse(req.responseText);
-          let mileage = response['distance']
-
-          // calculates fuel cost and rounds it to the nearest hundredth(two decimal places)
-          let calculation = (( mileage / fuel_efficiency) * fuelPrice).toFixed(2)
-          
-          let parent =  document.getElementById("results")
-          if (parent.childElementCount != 0){
-            deleteTable("results");
-            deleteTable("results1");
-          }
-          let p3 = document.createElement("p");
-          let p2 = document.createElement("p");
-          let p1 = document.createElement("p");
-          let header = document.createElement("h1");
-          parent.appendChild(header);
-          parent.appendChild(p1);
-          parent.appendChild(p2);
-          parent.appendChild(p3);
-          header.textContent = vehicleBrand + "  " + vehicleModel + " - " + vehicleYear;
-          header.classList.add("text-muted");
-          p1.textContent = "Fuel efficiency: " + fuel_efficiency + " MPG combined city/hwy";
-          p1.classList.add("text-muted")
-          p2.textContent = "Desired mileage of " + mileage + " miles";
-          p3.textContent = "Price of $" + fuelPrice + " per gallon";
-
-          let header2 = document.createElement("p");
-          document.getElementById("results1").appendChild(header2);
-          header2.textContent = "Total Cost = $" + calculation;
-                
-
+          User.mileage = response['distance'].toFixed(0);
+          User.cost = calculate_cost(User);
+          printResults(User)  // once calculation is made, the results are printed to the user.
       } else {
           console.log("Error in network request: " + req.statusText);
         }
@@ -138,81 +141,62 @@ function calculateCost(startMileage, endMileage, fuel_efficiency, fuelPrice, veh
 }
 
 
-
-// ***** Calculates and displays fuel cost resuls ****
-document.getElementById('calculate').addEventListener('click', function(event){
-  let fuel_efficiency;
-  let mileage;
-  let fuelPrice;
-  let vehicleBrand = document.getElementById('carBrand').value
-  let vehicleModel = document.getElementById('carModel').value
-  let vehicleYear = document.getElementById('carYear').value
-  for(let i=0; i<vehicles.length; i++ ) {
-    if (document.getElementById('carBrand').value == vehicles[i]['make'] && document.getElementById('carYear').value == vehicles[i]['year'] && document.getElementById('carModel').value == vehicles[i]['model']){
-      fuel_efficiency = vehicles[i]['comb08']
-    }
-  }
-  console.log(vehicleBrand, vehicleModel, vehicleYear, fuel_efficiency);
-
+// function gathers fuel information from user input.
+function getFuelDetails(User){
   if (document.getElementById('gasolineType').disabled == false){
-    console.log(document.getElementById('gasolineType').value)
-    fuelPrice = document.getElementById('gasolineType').value
+    User.fuelPrice = document.getElementById('gasolineType').value
 
   }if (document.getElementById('gasolineCustom').disabled == false){
-    console.log(document.getElementById('gasolineCustom').value)
-    fuelPrice = document.getElementById('gasolineCustom').value
+    User.fuelPrice = document.getElementById('gasolineCustom').value
+  }}
 
-  }if (document.getElementById('mileage').disabled == false){
-    console.log(document.getElementById('mileage').value)
-    mileage = document.getElementById('mileage').value
-      // calculates fuel cost and rounds it to the nearest hundredth(two decimal places)
-    let calculation = (( mileage / fuel_efficiency) * fuelPrice).toFixed(2)
-    
-    let parent =  document.getElementById("results")
-    if (parent.childElementCount != 0){
-      deleteTable("results");
-      deleteTable("results1");
-    }
-    let p3 = document.createElement("p");
-    let p2 = document.createElement("p");
-    let p1 = document.createElement("p");
-    let header = document.createElement("h1");
-    parent.appendChild(header);
-    parent.appendChild(p1);
-    parent.appendChild(p2);
-    parent.appendChild(p3);
-    header.textContent = vehicleBrand + "  " + vehicleModel + " - " + vehicleYear;
-    header.classList.add("text-muted");
-    p1.textContent = "Fuel efficiency: " + fuel_efficiency + " MPG combined city/hwy";
-    p1.classList.add("text-muted")
-    p2.textContent = "Desired mileage of " + mileage + " miles";
-    p3.textContent = "Price of $" + fuelPrice + " per gallon";
 
-    let header2 = document.createElement("p");
-    document.getElementById("results1").appendChild(header2);
-    header2.textContent = "Total Cost = $" + calculation;
+// function gathers mileage information from user input.
+function getMileageDetails(User){
+  // if user enters custom mileage.
+  if (document.getElementById('mileage').disabled == false){
+    User.mileage = document.getElementById('mileage').value;
+    User.cost = calculate_cost(User);
+    printResults(User) // once calculation is made, the results are printed to the user.
 
+  // if user enters zip codes to get mileage.
   }if (document.getElementById('mileageStart').disabled == false){
-    console.log(document.getElementById('mileageStart').value)
-    console.log(document.getElementById('mileageEnd').value)
-    let startMileage = document.getElementById('mileageStart').value
-    let endMileage = document.getElementById('mileageEnd').value
-    mileage = calculateCost(startMileage, endMileage, fuel_efficiency, fuelPrice, vehicleBrand, vehicleModel, vehicleYear)
+    User.startMileage = document.getElementById('mileageStart').value
+    User.endMileage = document.getElementById('mileageEnd').value
+    getMileage(User)
+  }};
 
-  }
-  
+
+// function gathers user's input and procceeds to make fuel cost calculation. 
+document.getElementById('calculate').addEventListener('click', function(event){
+  let vehicleBrand = document.getElementById('carBrand').value;
+  let vehicleModel = document.getElementById('carModel').value;
+  let vehicleYear = document.getElementById('carYear').value;
+
+  // User instance is created and initialized with vehicles's details.
+  const User = new UserInfo(vehicleBrand, vehicleModel, vehicleYear)
+
+  // finds vehicle's fuel efficiency according to vehicle's brand, model and year.
+  for(let i=0; i<vehicles.length; i++ ) {
+    if (document.getElementById('carBrand').value == vehicles[i]['make'] && document.getElementById('carYear').value == vehicles[i]['year'] && document.getElementById('carModel').value == vehicles[i]['model']){
+      User.fuel_efficiency = vehicles[i]['comb08']
+    }}
+
+  // gets remaining information to make fuel cost calculation. 
+  getFuelDetails(User);
+  getMileageDetails(User);
 
   event.preventDefault(); 
 });
 
 
-// Fields disabled by default
+// Folowing input fields are disabled by default.
 document.getElementById('mileageStart').disabled  = true
 document.getElementById('mileageEnd').disabled  = true
 document.getElementById('gasolineCustom').disabled  = true
 
-// Enable and disable Mileage Details field
-document.getElementById('mileage1').addEventListener('click', function(event){
+// Function enables and disables mileage details fields according to user selection.
+document.getElementById('mileage1').addEventListener('click', function(){
   document.getElementById('mileage').disabled = false
   document.getElementById('mileageStart').disabled  = true
   document.getElementById('mileageStart').value  = ''
@@ -220,36 +204,26 @@ document.getElementById('mileage1').addEventListener('click', function(event){
   document.getElementById('mileageEnd').value  = ''
 });
 
-document.getElementById('DistanceMileage').addEventListener('click', function(event){
+// Function enables and disables mileage details fields according to user selection.
+document.getElementById('DistanceMileage').addEventListener('click', function(){
   document.getElementById('mileage').disabled = true
   document.getElementById('mileage').value = ''
   document.getElementById('mileageStart').disabled  = false
   document.getElementById('mileageEnd').disabled  = false  
 });
 
-// Enable and Disbale Fuel Details field. 
-document.getElementById('gasType').addEventListener('click', function(event){
+// Function enables and disables fuel details fields according to user selection.
+document.getElementById('gasType').addEventListener('click', function(){
   document.getElementById('gasolineType').disabled = false
   document.getElementById('gasolineCustom').value = ''
   document.getElementById('gasolineCustom').disabled  = true
 });
 
-document.getElementById('gasCustom').addEventListener('click', function(event){
+// Function enables and disables fuel details fields according to user selection.
+document.getElementById('gasCustom').addEventListener('click', function(){
   document.getElementById('gasolineCustom').disabled  = false
   document.getElementById('gasolineType').disabled = true
   document.getElementById('gasolineType').value = ''
 });
-
-// Original Dropdown menu ---
-// let modelDropdown = document.getElementById('carModel');
-// for(let i=0; i<vehicles.length; i++ ) {    
-//     let menuItem = document.createElement('option');
-//     if (document.getElementById('carBrand').value == vehicles[i]['make'] && document.getElementById('carYear').value == vehicles[i]['year']){
-//           menuItem.text = vehicles[i]['model'];      
-//           menuItem.value = vehicles[i]['model'];     
-//           modelDropdown.add(menuItem); 
-//         // }
-//     }                
-//   }
 
 

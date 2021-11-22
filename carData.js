@@ -1,3 +1,13 @@
+
+// contains most common brands of cars sold in the United States
+export const brandData = [['Acura'], ['Alfa Romeo'], ['Aston Martin'], ['Audi'], ['Bentley'], ['BMW'], ['Bugatti'], ['Buick'], ['Cadillac'], ['Chevrolet'], ['Chrysler'], ['Dodge'], 
+['Ferrari'], ['Fiat'], ['Fisker'], ['Ford'], ['Genesis'], ['GMC'], ['Honda'], ['Hummer'], ['Hyundai'], ['Infiniti'], ['Jaguar'], ['Jeep'], ['Karma'], ['Kia'], 
+['Koenigsegg'], ['Lamborghini'], ['Land Rover'], ['Lexus'], ['Lincoln'], ['Lotus'], ['Maserati'], ['Maybach'], ['Mazda'], ['McLaren Automotive'], ['Mercedes-Benz'], 
+['Mercury'], ['MINI'], ['Mitsubishi'], ['Mobility Ventures LLC'], ['Nissan'], ['Pagani'], ['Polestar'], ['Pontiac'], ['Porsche'], ['Ram'], ['Rolls-Royce'], 
+['Roush Performance'], ['RUF Automobile'], ['Saab'], ['Saturn'], ['Scion'], ['smart'], ['Spyker'], ['SRT'], ['STI'], ['Subaru'], ['Suzuki'], ['Toyota'], ['Volkswagen'], 
+['Volvo'], ['VPG']]; 
+
+// Contains vehicle details and their respective fuel efficinecy. 
 export const vehicles = [
     {
       "city08": "19",

@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="project-style.css">
-    <!-- <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <title>Fuel Cost Calculator</title>
 </head>
@@ -14,12 +13,12 @@
         <div class='container container-background shadow'>
             <section class="pl-5 pr-5 space">
                 <div class="text-center bottom-line space-bottom">
-                   <!-- <img src="Logo copy.png" class="img-fluid" alt="">  -->
                    <a  href="index.html"> <img src="Logo copy.png" class="img-fluid" alt=""></a>
                 </div>
                 <h6 class="text-muted text-center pt-4">Please fill the fields below to get an estimate of fuel cost according to a vehicle's fuel efficiency, mileage driven and fuel price</h6>
                 <br>
                 <form>
+                    <!-- vehicle details menu (Car brand, year and model) -->
                     <h4 class="text-muted">Vehicle Details</h4>
                     <div class="card shadow-sm text-dark">
                         <div class="card-body bg-light-blue">
@@ -28,40 +27,26 @@
                                         <label>Brand</label>
                                         <input type="select" autocomplete="off" list="selectBrand" id ='carBrand' placeholder="- Select" class="form-control" >
                                         <datalist id="selectBrand"></datalist>
-                                        <!-- <select class="custom-select shadow-sm" id="carBrand"> -->
-                                            <!-- <option selected> - Select</option> -->
-                                            <!-- <option> Audi</option>
-                                            <option> BMW</option>
-                                            <option> Chevrolet</option>
-                                            <option> Chevrolet</option>
-                                            <option> Ford</option> -->
-                                        </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="title">Year</label>
                                         <input type="select" autocomplete="off" list="selectYear" id ='carYear' placeholder="- Select"  class="form-control" >
                                         <datalist id="selectYear"></datalist>
-                                        <!-- <select class="custom-select shadow-sm" id="carYear"> -->
-                                            <!-- <option selected> - Select</option>
-                                            <option> 2021</option> -->
-                                        </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="title">Model</label>
                                         <input type="select" autocomplete="off"  list="selectModel" id ='carModel' placeholder="- Select"  class="form-control" >
                                         <datalist id="selectModel"></datalist>
-                                        <!-- <select class="custom-select shadow-sm" id="carModel"> -->
-                                            <!-- <option selected> - Select</option>
-                                            <option> x3</option> -->
-                                        </select>
                                     </div>
                                 </div>
                         </div>
                     </div>
                     <br>
+                    <!-- mileage driven by user -->
                     <h4 class="text-muted">Mileage Details</h4>
                     <div class="card shadow-sm">
                         <div class="card-body bg-light-blue text-dark">
+                                <!-- custom mileage -->
                                 <div class="form-check col-md-4">
                                     <input class="form-check-input" type="radio" name="mileage" id="mileage1" value="option1" checked="checked">
                                     <label class="form-check-label" for="mileage1">Mileage<a class="text-muted small-font"> * Enter miles you are expected to drive</a></label>
@@ -69,6 +54,7 @@
 
                                 </div>
                                 <br>
+                                <!-- mileage between 2 locations (zip codes) -->
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="mileage" id="DistanceMileage" value="option2">
                                     <label class="form-check-label " for="mileage1">Distance Mileage<a class="text-muted small-font"> * Calculates miles bewteen two locations</a></label>
@@ -86,6 +72,7 @@
                         </div>
                     </div>
                     <br>
+                    <!-- Fuel price, select from menu pr enter custom price -->
                     <h4 class="text-muted">Fuel Details</h4>
                     <div class="card shadow-sm text-dark">
                         <div class="card-body bg-light-blue text-dark">
@@ -123,6 +110,7 @@
                     </div>
                 </form>
                 <br>
+                <!-- display the results of the calculation  -->
                 <div class="space">
                     <div class="card shadow" style="width: 100 rem; height: 25rem;">
                         <div class="card-body bg-light-blue">
