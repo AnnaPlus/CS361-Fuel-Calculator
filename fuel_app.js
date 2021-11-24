@@ -19,45 +19,46 @@ class UserInfo {
 
 // function populates car brand menu selection.
 document.getElementById('carBrand').addEventListener('click', function(event){
-    var select = document.getElementById('selectBrand')
-    for(let i=0; i<brandData.length; i++ ) {
-        var menuItem = document.createElement('option')
-        menuItem.textContent = brandData[i];
-        menuItem.value = brandData[i][0];
-        select.appendChild(menuItem)
-        }
-    event.preventDefault();
+  deleteResults('selectBrand')  // removes duplicate menus
+  var select = document.getElementById('selectBrand')
+  for(let i=0; i<brandData.length; i++ ) {
+      var menuItem = document.createElement('option')
+      menuItem.textContent = brandData[i];
+      menuItem.value = brandData[i][0];
+      select.appendChild(menuItem)
+      }
+  event.preventDefault();
 });
 
 
 // function populates car year menu according to car brand selected
 document.getElementById('carYear').addEventListener('click', function(event){
-  var select = document.getElementById('selectYear')
+  deleteResults('selectYear')
+  let select = document.getElementById('selectYear')
   let yearList = [];
   for(let i=0; i<vehicles.length; i++ ) {
       var menuItem = document.createElement('option')
       if (document.getElementById('carBrand').value == vehicles[i]['make']){
-        if (yearList.includes(vehicles[i]['year']) == false){
+        if (yearList.includes(vehicles[i]['year']) == false){  // avoid duplicates
           yearList.push(vehicles[i]['year'])
-          menuItem.text = vehicles[i]['year'];      
+          menuItem.textContent = vehicles[i]['year'];      
           menuItem.value = vehicles[i]['year'];    
           select.appendChild(menuItem);
-        }
-      }
-   }
+        }}}
 });
 
 // function populates car model menu selection according to car brand and year selected. 
 document.getElementById('carModel').addEventListener('click', function(event){
+  deleteResults('selectModel')
   var select = document.getElementById('selectModel')
   for(let i=0; i<vehicles.length; i++ ) {
       var menuItem = document.createElement('option')
-      if (document.getElementById('carBrand').value == vehicles[i]['make'] && document.getElementById('carYear').value == vehicles[i]['year']){
-          menuItem.text = vehicles[i]['model'];      
+      if (document.getElementById('carBrand').value == vehicles[i]['make']){
+        if (document.getElementById('carYear').value == vehicles[i]['year']){
+          menuItem.textContent = vehicles[i]['model'];      
           menuItem.value = vehicles[i]['model'];    
           select.appendChild(menuItem);
-      }
-   }
+      }}}
   event.preventDefault(); 
 });
 
@@ -65,11 +66,10 @@ document.getElementById('carModel').addEventListener('click', function(event){
 // function deletes results content. 
 // funtion deletes every child appended to the parent element. 
 function deleteResults(toDelete){ 
-  let parent =  document.getElementById(toDelete)
+  let parent = document.getElementById(toDelete)
   while(parent.firstChild){
     parent.removeChild(parent.firstChild);
-  }
-}
+  }}
 
 
 // function calculates fuel cost and rounds it to the nearest hundredth(two decimal places).
@@ -96,7 +96,7 @@ function displayMileage(User, parent){
   let p2 = document.createElement("p");
   parent.appendChild(p2);
   p2.textContent = "Desired mileage of " + User.mileage + " miles";
-}
+};
 
 
 // function displays total fuel cost to the user. 
@@ -104,7 +104,7 @@ function displayFuelCost(User){
   let header2 = document.createElement("p");
   document.getElementById("results1").appendChild(header2);
   header2.textContent = "Total Cost = $" + User.cost;
-}
+};
 
 
 // function prints the result of the calculation to the user.
@@ -114,13 +114,12 @@ function printResults(User){
   if (parent.childElementCount != 0){  // deletes previous results.
     deleteResults ("results");
     deleteResults ("results1");
-  }
+  };
   // displays results to the user.
   displayVehicleDetails(User, parent);
   displayMileage(User, parent);
   displayFuelCost(User);
-
-  }
+  };
 
 
 // function requests distance in mileage between two locations, using teammate's (Vi Phung) service. 
@@ -136,7 +135,7 @@ function getMileage(User){
           printResults(User)  // once calculation is made, the results are printed to the user.
       } else {
           console.log("Error in network request: " + req.statusText);
-        }
+        };
   });
 }
 
@@ -148,7 +147,7 @@ function getFuelDetails(User){
 
   }if (document.getElementById('gasolineCustom').disabled == false){
     User.fuelPrice = document.getElementById('gasolineCustom').value
-  }}
+  }};
 
 
 // function gathers mileage information from user input.
@@ -167,6 +166,16 @@ function getMileageDetails(User){
   }};
 
 
+  // function finds vehicle's fuel efficiency according to vehicle's brand, model and year.
+  function getFuelEfficiency(User){
+    for(let i=0; i<vehicles.length; i++ ) {
+      if (User.vehicleBrand == vehicles[i]['make']){
+        if (User.vehicleYear == vehicles[i]['year']){
+          if (User.vehicleModel == vehicles[i]['model']){
+            User.fuel_efficiency = vehicles[i]['comb08'];
+      }}}}};
+
+
 // function gathers user's input and procceeds to make fuel cost calculation. 
 document.getElementById('calculate').addEventListener('click', function(event){
   let vehicleBrand = document.getElementById('carBrand').value;
@@ -176,13 +185,8 @@ document.getElementById('calculate').addEventListener('click', function(event){
   // User instance is created and initialized with vehicles's details.
   const User = new UserInfo(vehicleBrand, vehicleModel, vehicleYear)
 
-  // finds vehicle's fuel efficiency according to vehicle's brand, model and year.
-  for(let i=0; i<vehicles.length; i++ ) {
-    if (document.getElementById('carBrand').value == vehicles[i]['make'] && document.getElementById('carYear').value == vehicles[i]['year'] && document.getElementById('carModel').value == vehicles[i]['model']){
-      User.fuel_efficiency = vehicles[i]['comb08']
-    }}
-
   // gets remaining information to make fuel cost calculation. 
+  getFuelEfficiency(User);
   getFuelDetails(User);
   getMileageDetails(User);
 

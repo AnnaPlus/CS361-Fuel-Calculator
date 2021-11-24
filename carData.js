@@ -1,5 +1,5 @@
 
-// contains most common brands of cars sold in the United States
+// contains most common brands of cars sold in the United States.
 export const brandData = [['Acura'], ['Alfa Romeo'], ['Aston Martin'], ['Audi'], ['Bentley'], ['BMW'], ['Bugatti'], ['Buick'], ['Cadillac'], ['Chevrolet'], ['Chrysler'], ['Dodge'], 
 ['Ferrari'], ['Fiat'], ['Fisker'], ['Ford'], ['Genesis'], ['GMC'], ['Honda'], ['Hummer'], ['Hyundai'], ['Infiniti'], ['Jaguar'], ['Jeep'], ['Karma'], ['Kia'], 
 ['Koenigsegg'], ['Lamborghini'], ['Land Rover'], ['Lexus'], ['Lincoln'], ['Lotus'], ['Maserati'], ['Maybach'], ['Mazda'], ['McLaren Automotive'], ['Mercedes-Benz'], 
