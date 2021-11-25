@@ -130,7 +130,7 @@ function getMileage(User){
   req.addEventListener('load',function(){
       if(req.status >= 200 && req.status < 400){
           let response = JSON.parse(req.responseText);
-          User.mileage = response['distance'].toFixed(0);
+          User.mileage = response['distance'].toFixed(0);  // get mileage in order to calculate cost.
           User.cost = calculate_cost(User);
           printResults(User)  // once calculation is made, the results are printed to the user.
       } else {

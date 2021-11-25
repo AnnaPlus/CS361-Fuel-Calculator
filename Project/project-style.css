@@ -1,0 +1,35 @@
+
+.small-font{
+    font:12px Georgia
+}
+
+/* space used between sections and divs */
+.space {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.space-bottom {
+    padding-bottom: 30px;
+}
+
+
+/* background colors */
+.bg-light-blue {
+    background: rgb(219, 232, 238)
+}
+
+.pre-container-background {
+    background: rgb(248, 248, 250)
+}
+
+.container-background {
+    background: rgb(255, 255, 255)
+}
+
+
+
+
+
+  
+  
