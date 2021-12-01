@@ -57,7 +57,7 @@
                                 <!-- mileage between 2 locations (zip codes) -->
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="mileage" id="DistanceMileage" value="option2">
-                                    <label class="form-check-label " for="mileage1">Distance Mileage<a class="text-muted small-font"> * Calculates miles bewteen two locations</a></label>
+                                    <label class="form-check-label " for="mileage1">Distance Mileage<a class="text-muted small-font"> * mileage bewteen two locations</a></label>
                                     <div class="row"> 
                                         <div class="form-group col-md-4 pt-2">
                                             <label class= 'card-text text-secondary'>Starting Point:</label>
@@ -81,12 +81,12 @@
                                     <div class="col-md-5">
                                         <input class="form-check-input" type="radio" name="gasprice" id="gasType" value="" checked="checked">
                                         <label class="form-check-label" for="mileage1">Gasoline Type<a class="text-muted small-font"> * Fuel prices are based on the national average</a></label>
-                                        <select class="custom-select shadow-sm" id="gasolineType">
-                                            <option selected> - Select</option>
-                                            <option value="3.27">Regular: $3.27</option>
-                                            <option value="3.59">Midgrade: $3.59</option>
-                                            <option value="3.89">Premium: $3.89</option>
-                                        </select>
+                                        <input type="select" autocomplete="off"  list="gasoline" id ='gasolineType' placeholder="- Select"  class="form-control" >
+                                        <datalist id="gasoline">
+                                            <option id="regular"><label>Regular</label></option>
+                                            <option id="midgrade"><label>Midgrade</label></option>
+                                            <option id="premium"><label>Premium</label></option>
+                                        </datalist>
                                     </div>
                                     <div class="col-md-5">
                                         <input class="form-check-input" type="radio" name="gasprice" id="gasCustom" value="">

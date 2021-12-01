@@ -16,7 +16,7 @@ app.get('/',function(req,resp,next){
     let recipeId = req.query.id
     let calorieAmount = {'calories': null}
 
-    // requests API Spoonacular for recipe calorie amount according to recipe ID
+    // requests API Spoonacular for recipe calorie amount according to recipe ID.
     request('https://api.spoonacular.com/recipes/' + recipeId + '/nutritionWidget.json?apiKey=' + API_Key, { json: true }, (err, res, body) => {
       if (err) { return console.log(err); }
         calorieAmount['calories'] = body.calories

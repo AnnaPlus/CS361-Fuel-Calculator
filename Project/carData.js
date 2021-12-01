@@ -7,7 +7,7 @@ export const brandData = [['Acura'], ['Alfa Romeo'], ['Aston Martin'], ['Audi'],
 ['Roush Performance'], ['RUF Automobile'], ['Saab'], ['Saturn'], ['Scion'], ['smart'], ['Spyker'], ['SRT'], ['STI'], ['Subaru'], ['Suzuki'], ['Toyota'], ['Volkswagen'], 
 ['Volvo'], ['VPG']]; 
 
-// Contains vehicle details and their respective fuel efficinecy. 
+// Contains vehicle details and their respective fuel efficiency. 
 export const vehicles = [
     {
       "city08": "19",

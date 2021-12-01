@@ -47,6 +47,7 @@ document.getElementById('carYear').addEventListener('click', function(event){
         }}}
 });
 
+
 // function populates car model menu selection according to car brand and year selected. 
 document.getElementById('carModel').addEventListener('click', function(event){
   deleteResults('selectModel')
@@ -59,6 +60,39 @@ document.getElementById('carModel').addEventListener('click', function(event){
           menuItem.value = vehicles[i]['model'];    
           select.appendChild(menuItem);
       }}}
+  event.preventDefault(); 
+});
+
+
+// function displays gasoline types and prices in the menu.
+function displayFuelPrices(response){
+  let regularFuel = document.getElementById('regular');
+  let midgradeFuel = document.getElementById('midgrade');
+  let premiumFuel = document.getElementById('premium');
+
+  // access values from response in XML format.
+  let regularPrice = response[0].getElementsByTagName("regular")[0].childNodes[0].nodeValue;
+  let midgradePrice = response[0].getElementsByTagName("midgrade")[0].childNodes[0].nodeValue;
+  let premiumPrice = response[0].getElementsByTagName("premium")[0].childNodes[0].nodeValue;
+  regularFuel.value = regularPrice;
+  midgradeFuel.value = midgradePrice;
+  premiumFuel.value = premiumPrice;
+}
+
+
+// function populates gasoline type/price menu.
+document.getElementById('gasolineType').addEventListener('click', function(event){
+  var req = new XMLHttpRequest();
+  req.open('GET', 'https://fueleconomy.gov/ws/rest/fuelprices', true);
+  req.send(null);
+  req.addEventListener('load',function(){
+      if(req.status >= 200 && req.status < 400){
+          let response = req.responseXML.getElementsByTagName("fuelPrices");
+          displayFuelPrices(response)
+      } else {
+          console.log("Error in network request: " + req.statusText);
+        };
+  });
   event.preventDefault(); 
 });
 
@@ -111,7 +145,9 @@ function displayFuelCost(User){
 function printResults(User){
   let parent =  document.getElementById("results");
 
-  if (parent.childElementCount != 0){  // deletes previous results.
+
+  // deletes previous results.
+  if (parent.childElementCount != 0){  
     deleteResults ("results");
     deleteResults ("results1");
   };
@@ -122,7 +158,7 @@ function printResults(User){
   };
 
 
-// function requests distance in mileage between two locations, using teammate's (Vi Phung) service. 
+// function requests distance in mileage between two locations, using teammate's service. 
 function getMileage(User){
   var req = new XMLHttpRequest();
   req.open('GET', 'https://distance-for-fuel-calc.herokuapp.com/?from=' + User.startMileage + '&to=' + User.endMileage + '&unit=mile', true);
@@ -189,7 +225,6 @@ document.getElementById('calculate').addEventListener('click', function(event){
   getFuelEfficiency(User);
   getFuelDetails(User);
   getMileageDetails(User);
-
   event.preventDefault(); 
 });
 
@@ -198,6 +233,7 @@ document.getElementById('calculate').addEventListener('click', function(event){
 document.getElementById('mileageStart').disabled  = true
 document.getElementById('mileageEnd').disabled  = true
 document.getElementById('gasolineCustom').disabled  = true
+
 
 // Function enables and disables mileage details fields according to user selection.
 document.getElementById('mileage1').addEventListener('click', function(){
@@ -208,6 +244,7 @@ document.getElementById('mileage1').addEventListener('click', function(){
   document.getElementById('mileageEnd').value  = ''
 });
 
+
 // Function enables and disables mileage details fields according to user selection.
 document.getElementById('DistanceMileage').addEventListener('click', function(){
   document.getElementById('mileage').disabled = true
@@ -216,12 +253,14 @@ document.getElementById('DistanceMileage').addEventListener('click', function(){
   document.getElementById('mileageEnd').disabled  = false  
 });
 
+
 // Function enables and disables fuel details fields according to user selection.
 document.getElementById('gasType').addEventListener('click', function(){
   document.getElementById('gasolineType').disabled = false
   document.getElementById('gasolineCustom').value = ''
   document.getElementById('gasolineCustom').disabled  = true
 });
+
 
 // Function enables and disables fuel details fields according to user selection.
 document.getElementById('gasCustom').addEventListener('click', function(){
